@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "97904493466",
+    "project_id": "bookclub-a864b",
+    "storage_bucket": "bookclub-a864b.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:97904493466:android:0d8d69c33de7570a053023",
+        "android_client_info": {
+          "package_name": "com.example.book_club"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAT93TUWHBumOu-14sTv5459iSwNdEcvDM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
