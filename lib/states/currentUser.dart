@@ -10,36 +10,61 @@ class CurrentUser extends ChangeNotifier {
 
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
-  Future<bool> signUpUser(String email, String password) async {
-    bool retVal = false;
+  Future<String> signUpUser(String email, String password) async {
+    String retVal = "Error";
     try {
       UserCredential userCredential = await _auth.createUserWithEmailAndPassword(email: email, password: password);
 
       if (userCredential.user != null) {
         _uid = userCredential.user!.uid;
         _email = userCredential.user!.email ?? '';
-        retVal = true;
+        retVal = "Success";
         notifyListeners();  // Notify listeners if needed to update UI
       }
+    } on FirebaseAuthException catch (e) {
+      switch (e.code) {
+        case "email-already-in-use":
+          retVal = "The email address is already in use.";
+          break;
+        case "invalid-email":
+          retVal = "The email address is invalid.";
+          break;
+        case "weak-password":
+          retVal = "The password is too weak.";
+          break;
+        default:
+          retVal = "An undefined error occurred: ${e.message}";
+      }
     } catch (e) {
-      print("Error signing up: $e");
+      retVal = "An unexpected error occurred.";
     }
     return retVal;
   }
 
-  Future<bool> loginUser(String email, String password) async {
-    bool retVal = false;
+  Future<String> loginUserWithEmail(String email, String password) async {
+    String retVal = "Error";
     try {
       UserCredential userCredential = await _auth.signInWithEmailAndPassword(email: email, password: password);
 
       if (userCredential.user != null) {
         _uid = userCredential.user!.uid;
         _email = userCredential.user!.email ?? '';
-        retVal = true;
+        retVal = "Success";
         notifyListeners();  // Notify listeners if needed to update UI
       }
+    } on FirebaseAuthException catch (e) {
+      switch (e.code) {
+        case "user-not-found":
+          retVal = "No user found with this email.";
+          break;
+        case "wrong-password":
+          retVal = "The password is incorrect.";
+          break;
+        default:
+          retVal = "An error occurred: ${e.message}";
+      }
     } catch (e) {
-      print(e);
+      retVal = "An unexpected error occurred.";
     }
     return retVal;
   }

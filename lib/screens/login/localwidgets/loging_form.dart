@@ -20,16 +20,17 @@ class _OurLoginFormState extends State<OurLoginForm> {
     CurrentUser _currentUser = Provider.of<CurrentUser>(context, listen: false);
 
     try {
-      if (await _currentUser.loginUser(email, password)) {
+      String _returnString = await _currentUser.loginUserWithEmail(email, password);
+      if (_returnString == "Success") {
         Navigator.pushReplacement(
           context,
           MaterialPageRoute(builder: (context) => const HomeScreen()),
         );
       } else {
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text("Login failed"),
-            duration: Duration(seconds: 2),
+          SnackBar(
+            content: Text(_returnString),
+            duration: const Duration(seconds: 2),
           ),
         );
       }

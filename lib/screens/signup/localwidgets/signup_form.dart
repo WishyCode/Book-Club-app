@@ -21,10 +21,18 @@ class _OurSignupFormState extends State<OurSignupForm> {
     CurrentUser _currentUser = Provider.of<CurrentUser>(context, listen: false);  
 
     try{
-      if (await _currentUser.signUpUser(email, password)) {
+      String _returnString = await _currentUser.signUpUser(email, password);
+      if (_returnString == "Success") {
         Navigator.pushReplacement(
           context,
           MaterialPageRoute(builder: (context) => const OurLogin()),
+        );
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(_returnString),
+            duration: const Duration(seconds: 2),
+          ),
         );
       }
     } catch(e) {
