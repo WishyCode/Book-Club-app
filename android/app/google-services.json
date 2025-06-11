@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "97904493466",
+    "project_id": "bookclub-a864b",
+    "storage_bucket": "bookclub-a864b.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:97904493466:android:0d8d69c33de7570a053023",
+        "android_client_info": {
+          "package_name": "com.example.book_club"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "97904493466-ctckbau52pesdsk2gj6daq5epr1bt5mg.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.book_club",
+            "certificate_hash": "fa4c4ec166607e7814699c2041703b9500205bbd"
+          }
+        },
+        {
+          "client_id": "97904493466-6rkoohlsmd7p7qgrdlthjakgool59qv4.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAT93TUWHBumOu-14sTv5459iSwNdEcvDM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "97904493466-6rkoohlsmd7p7qgrdlthjakgool59qv4.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,9 +1,78 @@
+import 'package:book_club/screens/home/home.dart';
 import 'package:book_club/screens/signup/signup.dart';
+import 'package:book_club/states/currentUser.dart';
 import 'package:book_club/widgets/our_container.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
-class OurLoginForm extends StatelessWidget {
+class OurLoginForm extends StatefulWidget {
   const OurLoginForm({super.key});
+
+  @override
+  State<OurLoginForm> createState() => _OurLoginFormState();
+}
+
+class _OurLoginFormState extends State<OurLoginForm> {
+  TextEditingController _emailContraller = TextEditingController();
+  TextEditingController _passwordContraller = TextEditingController();
+
+  void _loginUser(String email, String password, BuildContext context) async{
+    CurrentUser _currentUser = Provider.of<CurrentUser>(context, listen: false);
+
+    try {
+      String _returnString = await _currentUser.loginUserWithEmail(email, password);
+      if (_returnString == "Success") {
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (context) => const HomeScreen()),
+        );
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(_returnString),
+            duration: const Duration(seconds: 2),
+          ),
+        );
+      }
+    } catch (e) {
+      print(e);
+    }
+  }
+
+  Widget _googleButton() {
+  return OutlinedButton(
+    onPressed: () {},
+    style: OutlinedButton.styleFrom(
+      foregroundColor: Colors.grey, // Affects ripple color
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(40),
+      ),
+      side: const BorderSide(color: Colors.grey),
+    ),
+    child: Padding(
+      padding: const EdgeInsets.fromLTRB(0, 10, 0, 10), // Corrected padding
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: const [
+          Image(
+            image: AssetImage("assets/google_logo.png"),
+            height: 35.0,
+          ),
+          SizedBox(width: 10), // Correct spacing
+          Text(
+            "Sign in with Google",
+            style: TextStyle(
+              fontSize: 20,
+              color: Colors.grey,
+            ),
+          ),
+        ],
+      ),
+    ),
+  );
+}
+
 
   @override
   Widget build(BuildContext context) {
@@ -25,6 +94,7 @@ class OurLoginForm extends StatelessWidget {
             ),
           ),
           TextFormField(
+            controller: _emailContraller,
             decoration: const InputDecoration(
               prefixIcon: Icon(Icons.alternate_email),
               hintText: "Email",
@@ -32,6 +102,7 @@ class OurLoginForm extends StatelessWidget {
           ),
           const SizedBox(height: 20.0),
           TextFormField(
+            controller: _passwordContraller,
             decoration: const InputDecoration(
               prefixIcon: Icon(Icons.lock_outline),
               hintText: "Password",
@@ -45,7 +116,9 @@ class OurLoginForm extends StatelessWidget {
               tapTargetSize: MaterialTapTargetSize.shrinkWrap,
               // backgroundColor: Colors.blue,
             ),
-            onPressed: () {},
+            onPressed: () {
+              _loginUser(_emailContraller.text, _passwordContraller.text,context);
+            },
             child: const Text(
               "Login",
               style: TextStyle(
@@ -65,6 +138,8 @@ class OurLoginForm extends StatelessWidget {
               );
             },
           ),
+          const SizedBox(height: 20.0),
+          _googleButton(),
         ],
       ),
     );
